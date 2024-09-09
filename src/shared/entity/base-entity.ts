@@ -19,7 +19,7 @@ export abstract class BaseEntity {
   @IsDateString()
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({ type: 'timestamptz', nullable: true })
   @IsDateString()
   updatedAt: Date;
 }

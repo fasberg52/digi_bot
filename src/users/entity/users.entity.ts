@@ -9,7 +9,8 @@ import {
 import { SessionEntity } from 'src/session/entity/sessios.entity';
 import { BaseEntity } from 'src/shared/entity/base-entity';
 import { RoleEnum } from 'src/shared/enum/role.enum';
-import { Column, Entity, JoinColumn, OneToMany } from 'typeorm';
+import { SubscribeUserEntity } from 'src/subscribe/entity/subscribe-user.entity';
+import { Column, Entity, JoinColumn, OneToMany, Relation } from 'typeorm';
 
 @Entity('users')
 export class UserEntity extends BaseEntity {
@@ -65,4 +66,10 @@ export class UserEntity extends BaseEntity {
   @JoinColumn()
   @ApiProperty({ type: () => [SessionEntity] })
   sessions: SessionEntity[];
+
+  @OneToMany(
+    () => SubscribeUserEntity,
+    (userToSubscriptions) => userToSubscriptions.user,
+  )
+  userToSubscriptions: Relation<SubscribeUserEntity[]>;
 }
