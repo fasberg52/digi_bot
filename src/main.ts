@@ -1,7 +1,8 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerHelper } from './helper/swagger-helper';
 import { ValidationPipe } from '@nestjs/common';
+import { ClassTransformInterceptor } from './global-binded/interceptor/exponse-data.interseptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,7 +16,8 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  app.useGlobalInterceptors();
+  app.useGlobalInterceptors(new ClassTransformInterceptor());
+
   await new SwaggerHelper().setup(app);
 
   await app.listen(3005);

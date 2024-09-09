@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { IsDateString, IsNumber } from 'class-validator';
 import {
   Column,
@@ -17,9 +18,11 @@ export abstract class BaseEntity {
 
   @CreateDateColumn({ type: 'timestamptz' })
   @IsDateString()
+  @Exclude()
   createdAt: Date;
 
   @UpdateDateColumn({ type: 'timestamptz', nullable: true })
   @IsDateString()
+  @Exclude()
   updatedAt: Date;
 }
