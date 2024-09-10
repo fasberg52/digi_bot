@@ -7,12 +7,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import typeorm from './config/data-source';
 import { SubscribeModule } from './subscribe/subscribe.module';
+import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeorm],
+      envFilePath: '.env',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -23,6 +25,7 @@ import { SubscribeModule } from './subscribe/subscribe.module';
     AuthModule,
     UserModule,
     SubscribeModule,
+    TransactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

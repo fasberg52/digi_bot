@@ -7,33 +7,35 @@ import {
 } from '../zarinpal/interface/zarinpal.interface';
 import { PaymentGateway } from './gateway';
 import { HttpService } from '@nestjs/axios';
+import { BadRequestException } from '@nestjs/common';
+import { config as dotenvConfig } from 'dotenv';
 
+dotenvConfig({ path: '.env' });
 export class ZarinpalGateway extends PaymentGateway {
   private readonly httpService: HttpService;
-  private baseUrl = 'https://www.zarinpal.com/pg/rest/WebGate/';
 
   async createPayment(
     request: IZarinpalRequest,
   ): Promise<IZarinpalPaymentResponse> {
     try {
-      const response = await axios.post(`${this.baseUrl}PaymentRequest.json`, {
-        MerchantID: request.merchantId,
-        Amount: request.amount,
-        Description: request.description,
-        CallbackURL: request.callbackUrl,
-        Mobile: request.mobile,
-        Email: request.email,
+      const response = await axios.post(`${process.env.REQUEST_PAY_ZARINPAL}`, {
+        merchant_id: request.merchantId,
+        amount: request.amount * 10,
+        description: request.description,
+        callback_url: request.callbackUrl,
       });
 
-      if (response.data.Status === 100) {
+      console.log(`>>>>>${response.data.data.authority}`);
+
+      if (response.data.data.code === 100) {
         return {
-          status: response.data.Status,
-          authority: response.data.Authority,
-          url: `https://www.zarinpal.com/pg/StartPay/${response.data.Authority}`,
+          status: response.data.code,
+          authority: response.data.authority,
+          url: `${process.env.START_PAY_ZARINPAL}/${response.data.data.authority}`,
         };
       } else {
         throw new Error(
-          `Payment request failed with status ${response.data.Status}`,
+          `Payment request failed with status ${response.data.code}`,
         );
       }
     } catch (error) {
@@ -45,27 +47,34 @@ export class ZarinpalGateway extends PaymentGateway {
     verifyRequest: IZarinpalVerifyRequest,
   ): Promise<IZarinpalVerifyResponse> {
     try {
-      const response = await axios.post(
-        `${this.baseUrl}PaymentVerification.json`,
-        {
-          MerchantID: verifyRequest.merchantId,
-          Authority: verifyRequest.authority,
-          Amount: verifyRequest.amount,
-        },
-      );
+      console.log('test', {
+        merchant_id: verifyRequest.merchantId,
+        amount: verifyRequest.amount,
+        authority: verifyRequest.authority,
+      });
 
-      if (response.data.Status === 100) {
+      console.log('VERIFY_PAY_ZARINPAL:', process.env.VERIFY_PAY_ZARINPAL);
+
+      const response = await axios.post(`${process.env.VERIFY_PAY_ZARINPAL}`, {
+        merchant_id: verifyRequest.merchantId,
+        authority: verifyRequest.authority,
+        amount: verifyRequest.amount,
+      });
+
+      console.log('^^^^^^' + response.data.data);
+
+      if (response.data.data.code === 100) {
         return {
-          status: response.data.Status,
-          refId: response.data.RefID,
+          status: response.data.data.code,
+          refId: response.data.data.ref_id,
         };
       } else {
         throw new Error(
-          `Verification failed with status ${response.data.Status}`,
+          `Verification failed with status ${response.data.data.Status}`,
         );
       }
     } catch (error) {
-      throw new Error(`Error verifying payment: ${error.message}`);
+      throw new Error(`Error verifying payment: ${error}`);
     }
   }
 }

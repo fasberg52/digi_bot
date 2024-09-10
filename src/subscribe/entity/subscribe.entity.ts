@@ -12,6 +12,7 @@ import { BaseEntity } from 'src/shared/entity/base-entity';
 import { Column, DeleteDateColumn, Entity, OneToMany, Relation } from 'typeorm';
 import { SubscriptionStatusEnum } from '../enums/subscribe.entity';
 import { SubscribeUserEntity } from './subscribe-user.entity';
+import { TransactionEntity } from 'src/transaction/entity/transaction.entity';
 
 @Entity({ name: 'subscribe' })
 export class SubscribeEntity extends BaseEntity {
@@ -76,5 +77,14 @@ export class SubscribeEntity extends BaseEntity {
     () => SubscribeUserEntity,
     (userToSubscriptions) => userToSubscriptions.subscribe,
   )
+  @ApiProperty({
+    type: () => [SubscribeUserEntity],
+  })
   userToSubscriptions: Relation<SubscribeUserEntity[]>;
+
+  @OneToMany(() => TransactionEntity, (transactions) => transactions.subscribe)
+  @ApiProperty({
+    type: () => [TransactionEntity],
+  })
+  transactions: Relation<TransactionEntity[]>;
 }

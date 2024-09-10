@@ -32,7 +32,6 @@ export class SwaggerHelper {
       })
       .build();
 
-    // Add Basic Auth Middleware for Swagger
     app.use(this.basicAuthInterceptor.bind(this));
 
     const document = SwaggerModule.createDocument(app, config);
