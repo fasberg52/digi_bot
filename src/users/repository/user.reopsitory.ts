@@ -8,8 +8,8 @@ export class UserRepository extends BaseRepository<UserEntity> {
   constructor(private dataSource: DataSource) {
     super(UserEntity, dataSource.createEntityManager());
   }
-  async findOneUser(phone: string): Promise<UserEntity> {
-    return await this.findOne({ where: { phone } });
+  async findOneUser(id: number): Promise<UserEntity> {
+    return await this.findOne({ where: { id } });
   }
 
   async findOneUserByTelegram(telegramId: number): Promise<UserEntity> {

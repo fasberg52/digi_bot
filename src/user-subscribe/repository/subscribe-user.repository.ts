@@ -8,4 +8,8 @@ export class UserSubscribeRepository extends BaseRepository<SubscribeUserEntity>
   constructor(private dataSource: DataSource) {
     super(SubscribeUserEntity, dataSource.createEntityManager());
   }
+
+  async findOneSubscribeUser(id: number): Promise<SubscribeUserEntity> {
+    return await this.findOne({ where: { id } });
+  }
 }

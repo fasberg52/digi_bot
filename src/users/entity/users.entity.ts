@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsDateString,
   IsEnum,
   IsNotEmpty,
   IsOptional,
@@ -11,7 +12,16 @@ import { BaseEntity } from 'src/shared/entity/base-entity';
 import { RoleEnum } from 'src/shared/enum/role.enum';
 import { SubscribeUserEntity } from 'src/user-subscribe/entity/subscribe-user.entity';
 import { TransactionEntity } from 'src/transaction/entity/transaction.entity';
-import { Column, Entity, JoinColumn, OneToMany, Relation } from 'typeorm';
+import {
+  Column,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  Relation,
+} from 'typeorm';
+import { Exclude } from 'class-transformer';
+import { ApiKeyEntity } from 'src/token/entity/api-key.entity';
 
 @Entity('users')
 export class UserEntity extends BaseEntity {
@@ -79,4 +89,14 @@ export class UserEntity extends BaseEntity {
   @JoinColumn()
   @ApiProperty({ type: () => [TransactionEntity] })
   transactions: TransactionEntity[];
+
+  @OneToMany(() => ApiKeyEntity, (apiKeys) => apiKeys.user)
+  @JoinColumn()
+  @ApiProperty({ type: () => [ApiKeyEntity] })
+  apiKeys: Relation<ApiKeyEntity[]>;
+
+  @DeleteDateColumn({ type: 'timestamptz', nullable: true })
+  @IsDateString()
+  @Exclude()
+  deletedAt: Date;
 }
