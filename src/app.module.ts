@@ -9,6 +9,7 @@ import typeorm from './config/data-source';
 import { SubscribeModule } from './subscribe/subscribe.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { UserSubscribeModule } from './user-subscribe/user-subscribe.module';
+import { ApiKeyModule } from './token/api-key.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UserSubscribeModule } from './user-subscribe/user-subscribe.module';
     SubscribeModule,
     TransactionModule,
     UserSubscribeModule,
+    ApiKeyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

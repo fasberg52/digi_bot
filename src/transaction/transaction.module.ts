@@ -9,23 +9,35 @@ import { ZarinpalGateway } from 'src/payment/gateway/zarinpal.gateway';
 import { UserSubscribeService } from 'src/user-subscribe/user-subscribe.service';
 import { UserSubscribeRepository } from 'src/user-subscribe/repository/subscribe-user.repository';
 import { HttpModule, HttpService } from '@nestjs/axios';
+import { ApiKeyService } from 'src/token/api-key.service';
+import { ApikeyRepository } from 'src/token/repository/api-key.repository';
+import { UserService } from 'src/users/users.service';
+import { UserRepository } from 'src/users/repository/user.reopsitory';
 
+const repo = [
+  TransactionRepository,
+  SubscribeRepository,
+  UserSubscribeRepository,
+  ApikeyRepository,
+  UserRepository,
+];
 @Module({
   controllers: [TransactionController],
   providers: [
+    ...repo,
     TransactionService,
-    TransactionRepository,
-    SubscribeRepository,
     ZarinpalService,
     ZarinpalGateway,
     UserSubscribeService,
-    UserSubscribeRepository,
+    ApiKeyService,
+    UserService,
   ],
   imports: [
     TypeOrmModule.forFeature([
       TransactionRepository,
       SubscribeRepository,
       UserSubscribeRepository,
+      ApikeyRepository,
     ]),
     HttpModule,
   ],

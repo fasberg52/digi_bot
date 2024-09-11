@@ -5,11 +5,12 @@ import { UpdateApiKeyDto } from './dto/update-api.dto';
 import { CreateApiKeyDto } from './dto/create-api.dto';
 import { ApiKeyEntity } from './entity/api-key.entity';
 import { UserService } from 'src/users/users.service';
+import { ApikeyRepository } from './repository/api-key.repository';
 
 @Injectable()
 export class ApiKeyService {
   constructor(
-    private readonly _apiKeyRepository: Repository<ApiKeyEntity>,
+    private readonly _apiKeyRepository: ApikeyRepository,
     private readonly _userService: UserService,
   ) {}
 
@@ -19,9 +20,17 @@ export class ApiKeyService {
       throw new NotFoundException('کاربر پیدا نشد');
     }
 
-    await this._apiKeyRepository.save({
+    await this._apiKeyRepository.createApikey({
       user,
     });
+  }
+  async checkApikey(apikey: string) {
+    const apiKey = await this.getByApiKey(apikey);
+    if (!apiKey) {
+      throw new NotFoundException('کلید نامعتبر');
+    }
+
+    return apiKey;
   }
 
   findAll() {
