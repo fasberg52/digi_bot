@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import typeorm from './config/data-source';
 import { SubscribeModule } from './subscribe/subscribe.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { UserSubscribeModule } from './user-subscribe/user-subscribe.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { TransactionModule } from './transaction/transaction.module';
     UserModule,
     SubscribeModule,
     TransactionModule,
+    UserSubscribeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

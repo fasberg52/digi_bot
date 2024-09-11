@@ -6,6 +6,9 @@ import { TransactionRepository } from './repository/transaction.repository';
 import { SubscribeRepository } from 'src/subscribe/repository/subscribe.repository';
 import { ZarinpalService } from 'src/payment/zarinpal/zarinpal.service';
 import { ZarinpalGateway } from 'src/payment/gateway/zarinpal.gateway';
+import { UserSubscribeService } from 'src/user-subscribe/user-subscribe.service';
+import { UserSubscribeRepository } from 'src/user-subscribe/repository/subscribe-user.repository';
+import { HttpModule, HttpService } from '@nestjs/axios';
 
 @Module({
   controllers: [TransactionController],
@@ -15,9 +18,17 @@ import { ZarinpalGateway } from 'src/payment/gateway/zarinpal.gateway';
     SubscribeRepository,
     ZarinpalService,
     ZarinpalGateway,
+    UserSubscribeService,
+    UserSubscribeRepository,
   ],
   imports: [
-    TypeOrmModule.forFeature([TransactionRepository, SubscribeRepository]),
+    TypeOrmModule.forFeature([
+      TransactionRepository,
+      SubscribeRepository,
+      UserSubscribeRepository,
+    ]),
+    HttpModule,
   ],
+  exports: [],
 })
 export class TransactionModule {}

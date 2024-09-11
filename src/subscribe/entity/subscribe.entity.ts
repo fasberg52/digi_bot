@@ -11,7 +11,7 @@ import {
 import { BaseEntity } from 'src/shared/entity/base-entity';
 import { Column, DeleteDateColumn, Entity, OneToMany, Relation } from 'typeorm';
 import { SubscriptionStatusEnum } from '../enums/subscribe.entity';
-import { SubscribeUserEntity } from './subscribe-user.entity';
+import { SubscribeUserEntity } from '../../user-subscribe/entity/subscribe-user.entity';
 import { TransactionEntity } from 'src/transaction/entity/transaction.entity';
 
 @Entity({ name: 'subscribe' })

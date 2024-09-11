@@ -9,6 +9,8 @@ import { SubscribeRepository } from 'src/subscribe/repository/subscribe.reposito
 import { TransactionStatus } from './enums/transaction.enum';
 import { ZarinpalService } from 'src/payment/zarinpal/zarinpal.service';
 import { TransactionEntity } from './entity/transaction.entity';
+import { UserSubscribeService } from 'src/user-subscribe/user-subscribe.service';
+import { UserSubscribeRepository } from 'src/user-subscribe/repository/subscribe-user.repository';
 
 @Injectable()
 export class TransactionService {
@@ -16,9 +18,11 @@ export class TransactionService {
     private readonly transactionRepository: TransactionRepository,
     private readonly subscribeRepository: SubscribeRepository,
     private readonly zarinpalService: ZarinpalService,
+    private readonly userSubscribeRepository: UserSubscribeRepository,
+    private readonly userSubscribeService: UserSubscribeService,
   ) {}
   async createTransaction(createTransactionDto: CreateTransactionDto) {
-    const { userId, subscribeId, amount } = createTransactionDto;
+    const { userId, subscribeId } = createTransactionDto;
 
     const subscription = await this.subscribeRepository.findOne({
       where: { id: subscribeId },
@@ -30,7 +34,7 @@ export class TransactionService {
       status: TransactionStatus.PENDING,
       userId,
       subscribeId,
-      amount,
+      amount: subscription.price,
     });
     return await this.transactionRepository.save(transaction);
   }
@@ -75,18 +79,25 @@ export class TransactionService {
         merchantId: process.env.MERCHANT_ID_ZARINPAL,
       });
 
-    if (verificationResponse.status === 100 && status === 'OK') {
-      transaction.status = TransactionStatus.VERIFIED;
-      transaction.refId = verificationResponse.refId;
-    } else {
+    if (verificationResponse.code === 100) {
       transaction.status = TransactionStatus.CANCELLED;
+    } else if (status === 'NOK') {
+      transaction.status = TransactionStatus.VERIFIED;
+      // transaction.refId = verificationResponse.refId;
+      console.log(transaction.userId, transaction.subscribeId);
+
+      transaction.refId = null;
+      await this.userSubscribeService.createSubscribe(
+        transaction.userId,
+        transaction.subscribeId,
+      );
     }
 
     await this.transactionRepository.save(transaction);
 
     return {
       transaction,
-      verificationResponse,
+      verificationResponse: verificationResponse.data,
     };
   }
 }

@@ -9,7 +9,7 @@ import {
 import { SessionEntity } from 'src/session/entity/sessios.entity';
 import { BaseEntity } from 'src/shared/entity/base-entity';
 import { RoleEnum } from 'src/shared/enum/role.enum';
-import { SubscribeUserEntity } from 'src/subscribe/entity/subscribe-user.entity';
+import { SubscribeUserEntity } from 'src/user-subscribe/entity/subscribe-user.entity';
 import { TransactionEntity } from 'src/transaction/entity/transaction.entity';
 import { Column, Entity, JoinColumn, OneToMany, Relation } from 'typeorm';
 
