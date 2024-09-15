@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserSubscribeDto } from './dto/create-user-subscribe';
 import { UserSubscribeRepository } from './repository/subscribe-user.repository';
 import * as moment from 'moment-jalaali';
-import { SubscribeRepository } from 'src/subscribe/repository/subscribe.repository';
-import { ApiKeyService } from 'src/token/api-key.service';
+import { SubscribeRepository } from '../subscribe/repository/subscribe.repository';
+import { ApiKeyService } from '../token/api-key.service';
 
 @Injectable()
 export class UserSubscribeService {

@@ -2,8 +2,8 @@ import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsNotEmpty, IsNumber } from 'class-validator';
 import { Column, Entity, JoinColumn, ManyToOne, Relation } from 'typeorm';
 import { SubscribeEntity } from '../../subscribe/entity/subscribe.entity';
-import { UserEntity } from 'src/users/entity/users.entity';
-import { BaseEntity } from 'src/shared/entity/base-entity';
+import { UserEntity } from '../../users/entity/users.entity';
+import { BaseEntity } from '../../shared/entity/base-entity';
 
 @Entity({ name: 'user_subscription' })
 @ApiExtraModels()

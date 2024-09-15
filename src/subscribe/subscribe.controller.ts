@@ -15,7 +15,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateSubscribeDto } from './dto/create-subscribe.dto';
-import { MessageResponse } from 'src/shared/response/base-response';
+import { MessageResponse } from '../shared/response/base-response';
 import { SubscribeService } from './subscribe.service';
 import { UpdateSubscribeDto } from './dto/update-subscribe.dto';
 import {

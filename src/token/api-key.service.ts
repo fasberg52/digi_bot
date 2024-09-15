@@ -4,7 +4,7 @@ import { Equal, Repository } from 'typeorm';
 import { UpdateApiKeyDto } from './dto/update-api.dto';
 import { CreateApiKeyDto } from './dto/create-api.dto';
 import { ApiKeyEntity } from './entity/api-key.entity';
-import { UserService } from 'src/users/users.service';
+import { UserService } from '../users/users.service';
 import { ApikeyRepository } from './repository/api-key.repository';
 
 @Injectable()

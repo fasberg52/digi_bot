@@ -20,6 +20,6 @@ async function bootstrap() {
 
   await new SwaggerHelper().setup(app);
 
-  await app.listen(3005);
+  await app.listen(process.env.APP_PORT, '0.0.0.0');
 }
 bootstrap();

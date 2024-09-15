@@ -7,7 +7,7 @@ import {
   ApiProperty,
   ApiTags,
 } from '@nestjs/swagger';
-import { SuccessResponse } from 'src/shared/response/base-response';
+import { SuccessResponse } from '../shared/response/base-response';
 import { TelegramStrategy } from './strategy/telegram.strategy';
 
 @ApiTags('auth')

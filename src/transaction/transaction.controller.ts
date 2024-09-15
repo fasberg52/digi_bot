@@ -5,9 +5,13 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
-import { TransactionResponse } from './response/transaction.response';
+import {
+  TransactionListResponse,
+  TransactionResponse,
+} from './response/transaction.response';
 import { TransactionService } from './transaction.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { getAllQuery } from '../shared/dto/query.dto';
 
 @Controller('transaction')
 @ApiTags('Transaction')
@@ -35,5 +39,15 @@ export class TransactionController {
       Status,
       transactionId,
     );
+  }
+
+  @ApiOkResponse(TransactionListResponse.getApiDoc())
+  @Get()
+  async getAllTransactions(
+    @Query() query: getAllQuery,
+  ): Promise<TransactionListResponse> {
+    const [result, total] =
+      await this.transactionService.getAllTransaction(query);
+    return new TransactionListResponse(result, total);
   }
 }

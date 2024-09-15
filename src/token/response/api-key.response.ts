@@ -1,5 +1,5 @@
 import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
-import { BaseResponse } from 'src/shared/response/base-response';
+import { BaseResponse } from '../../shared/response/base-response';
 
 @ApiExtraModels()
 export class CheckApiResponse extends BaseResponse {

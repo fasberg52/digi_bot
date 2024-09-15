@@ -1,4 +1,4 @@
-// src/common/response/success-response.ts
+// ../../common/response/success-response.ts
 import { ApiExtraModels } from '@nestjs/swagger';
 import { BaseResponse } from './base-response';
 

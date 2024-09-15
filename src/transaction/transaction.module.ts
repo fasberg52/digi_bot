@@ -3,16 +3,16 @@ import { TransactionController } from './transaction.controller';
 import { TransactionService } from './transaction.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TransactionRepository } from './repository/transaction.repository';
-import { SubscribeRepository } from 'src/subscribe/repository/subscribe.repository';
-import { ZarinpalService } from 'src/payment/zarinpal/zarinpal.service';
-import { ZarinpalGateway } from 'src/payment/gateway/zarinpal.gateway';
-import { UserSubscribeService } from 'src/user-subscribe/user-subscribe.service';
-import { UserSubscribeRepository } from 'src/user-subscribe/repository/subscribe-user.repository';
+import { SubscribeRepository } from '../subscribe/repository/subscribe.repository';
+import { ZarinpalService } from '../payment/zarinpal/zarinpal.service';
+import { ZarinpalGateway } from '../payment/gateway/zarinpal.gateway';
+import { UserSubscribeService } from '../user-subscribe/user-subscribe.service';
+import { UserSubscribeRepository } from '../user-subscribe/repository/subscribe-user.repository';
 import { HttpModule, HttpService } from '@nestjs/axios';
-import { ApiKeyService } from 'src/token/api-key.service';
-import { ApikeyRepository } from 'src/token/repository/api-key.repository';
-import { UserService } from 'src/users/users.service';
-import { UserRepository } from 'src/users/repository/user.reopsitory';
+import { ApiKeyService } from '../token/api-key.service';
+import { ApikeyRepository } from '../token/repository/api-key.repository';
+import { UserService } from '../users/users.service';
+import { UserRepository } from '../users/repository/user.reopsitory';
 
 const repo = [
   TransactionRepository,

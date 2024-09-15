@@ -1,0 +1,6 @@
+{
+  "platform": "node",
+  "app": "digibot",
+  "port": 3000,
+  "preDeploy": "./liara_pre_start.sh"
+}

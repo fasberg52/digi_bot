@@ -7,11 +7,11 @@ import {
   IsString,
   Length,
 } from 'class-validator';
-import { SessionEntity } from 'src/session/entity/sessios.entity';
-import { BaseEntity } from 'src/shared/entity/base-entity';
-import { RoleEnum } from 'src/shared/enum/role.enum';
-import { SubscribeUserEntity } from 'src/user-subscribe/entity/subscribe-user.entity';
-import { TransactionEntity } from 'src/transaction/entity/transaction.entity';
+import { SessionEntity } from '../../session/entity/session.entity';
+import { BaseEntity } from '../../shared/entity/base-entity';
+import { RoleEnum } from '../../shared/enum/role.enum';
+import { SubscribeUserEntity } from '../../user-subscribe/entity/subscribe-user.entity';
+import { TransactionEntity } from '../../transaction/entity/transaction.entity';
 import {
   Column,
   DeleteDateColumn,
@@ -21,7 +21,7 @@ import {
   Relation,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { ApiKeyEntity } from 'src/token/entity/api-key.entity';
+import { ApiKeyEntity } from '../../token/entity/api-key.entity';
 
 @Entity('users')
 export class UserEntity extends BaseEntity {

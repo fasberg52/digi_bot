@@ -3,11 +3,11 @@ import { UserSubscribeService } from './user-subscribe.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserSubscribeRepository } from './repository/subscribe-user.repository';
 import { UserSubscribeController } from './user-subscribe.controller';
-import { SubscribeRepository } from 'src/subscribe/repository/subscribe.repository';
-import { ApiKeyService } from 'src/token/api-key.service';
-import { ApikeyRepository } from 'src/token/repository/api-key.repository';
-import { UserService } from 'src/users/users.service';
-import { UserRepository } from 'src/users/repository/user.reopsitory';
+import { SubscribeRepository } from '../subscribe/repository/subscribe.repository';
+import { ApiKeyService } from '../token/api-key.service';
+import { ApikeyRepository } from '../token/repository/api-key.repository';
+import { UserService } from '../users/users.service';
+import { UserRepository } from '../users/repository/user.reopsitory';
 
 const repo = [
   UserSubscribeRepository,

@@ -1,5 +1,5 @@
 import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
-import { BaseResponse, Pagination } from 'src/shared/response/base-response';
+import { BaseResponse, Pagination } from '../../shared/response/base-response';
 import { SubscribeEntity } from '../entity/subscribe.entity';
 
 @ApiExtraModels()

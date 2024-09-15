@@ -8,11 +8,11 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { BaseEntity } from 'src/shared/entity/base-entity';
+import { BaseEntity } from '../../shared/entity/base-entity';
 import { Column, DeleteDateColumn, Entity, OneToMany, Relation } from 'typeorm';
 import { SubscriptionStatusEnum } from '../enums/subscribe.entity';
 import { SubscribeUserEntity } from '../../user-subscribe/entity/subscribe-user.entity';
-import { TransactionEntity } from 'src/transaction/entity/transaction.entity';
+import { TransactionEntity } from '../../transaction/entity/transaction.entity';
 
 @Entity({ name: 'subscribe' })
 export class SubscribeEntity extends BaseEntity {

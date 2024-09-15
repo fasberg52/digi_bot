@@ -5,12 +5,14 @@ import {
 } from '@nestjs/common';
 import { TransactionRepository } from './repository/transaction.repository';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { SubscribeRepository } from 'src/subscribe/repository/subscribe.repository';
+import { SubscribeRepository } from '../subscribe/repository/subscribe.repository';
 import { TransactionStatus } from './enums/transaction.enum';
-import { ZarinpalService } from 'src/payment/zarinpal/zarinpal.service';
+import { ZarinpalService } from '../payment/zarinpal/zarinpal.service';
 import { TransactionEntity } from './entity/transaction.entity';
-import { UserSubscribeService } from 'src/user-subscribe/user-subscribe.service';
-import { UserSubscribeRepository } from 'src/user-subscribe/repository/subscribe-user.repository';
+import { UserSubscribeService } from '../user-subscribe/user-subscribe.service';
+import { UserSubscribeRepository } from '../user-subscribe/repository/subscribe-user.repository';
+import { Equal, FindManyOptions, FindOptionsWhere, Like } from 'typeorm';
+import { getAllQuery } from '../shared/dto/query.dto';
 
 @Injectable()
 export class TransactionService {
@@ -99,5 +101,27 @@ export class TransactionService {
       transaction,
       verificationResponse: verificationResponse.data,
     };
+  }
+
+  async getAllTransaction(
+    query: getAllQuery,
+  ): Promise<[TransactionEntity[], number]> {
+    const { page, limit, sortBy, sortOrder, search } = query;
+    const where: FindOptionsWhere<TransactionEntity>[] = search
+      ? [{ refId: Equal(Number(search)) }, { id: Like(`%${search}%`) }]
+      : [];
+
+    const options: FindManyOptions<TransactionEntity> = {
+      where,
+      skip: (page - 1) * limit,
+      take: limit,
+      order: {
+        [sortBy]: sortOrder,
+      },
+    };
+
+    const [transactions, total] =
+      await this.transactionRepository.findAndCount(options);
+    return [transactions, total];
   }
 }

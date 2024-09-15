@@ -11,8 +11,8 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { TransactionStatus } from '../enums/transaction.enum';
 import { ApiProperty } from '@nestjs/swagger';
-import { SubscribeEntity } from 'src/subscribe/entity/subscribe.entity';
-import { UserEntity } from 'src/users/entity/users.entity';
+import { SubscribeEntity } from '../../subscribe/entity/subscribe.entity';
+import { UserEntity } from '../../users/entity/users.entity';
 import {
   IsDateString,
   IsEnum,

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { BaseRepository } from 'src/shared/repository/base-repository';
+import { BaseRepository } from '../../shared/repository/base-repository';
 import { DataSource } from 'typeorm';
-import { SessionEntity } from '../entity/sessios.entity';
+import { SessionEntity } from '../entity/session.entity';
 
 @Injectable()
 export class SessionRepository extends BaseRepository<SessionEntity> {

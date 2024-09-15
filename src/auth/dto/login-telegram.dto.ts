@@ -1,7 +1,7 @@
 import { PartialType, PickType } from '@nestjs/swagger';
-import { UserEntity } from 'src/users/entity/users.entity';
+import { UserEntity } from '../../users/entity/users.entity';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, IsPhoneNumber } from 'class-validator';
+import { IsString, IsOptional, IsPhoneNumber, IsNumber } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 
 export class loginTelegramDto extends PickType(UserEntity, [
@@ -11,7 +11,7 @@ export class loginTelegramDto extends PickType(UserEntity, [
 
 export class TelegramProfileDto {
   @ApiProperty()
-  @IsString()
+  @IsNumber()
   @Type(() => Number)
   id: number;
 
@@ -32,7 +32,6 @@ export class TelegramProfileDto {
 
   @ApiProperty()
   @IsString()
-  @IsPhoneNumber(null)
   @IsOptional()
   phone_number?: string;
 }

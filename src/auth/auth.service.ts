@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from 'src/users/repository/user.reopsitory';
+import { UserRepository } from '../users/repository/user.reopsitory';
 import { loginTelegramDto, TelegramProfileDto } from './dto/login-telegram.dto';
-import { UserEntity } from 'src/users/entity/users.entity';
+import { UserEntity } from '../users/entity/users.entity';
 
 @Injectable()
 export class AuthService {

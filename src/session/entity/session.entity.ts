@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, Relation } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserEntity } from 'src/users/entity/users.entity';
-import { BaseEntity } from 'src/shared/entity/base-entity';
+import { UserEntity } from '../../users/entity/users.entity';
+import { BaseEntity } from '../../shared/entity/base-entity';
 
 @Entity('sessions')
 export class SessionEntity extends BaseEntity {

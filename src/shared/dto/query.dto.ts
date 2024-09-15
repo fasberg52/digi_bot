@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional, ApiQuery } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsDateString, IsInt, IsOptional, IsString } from 'class-validator';
-import { PaginationDto } from 'src/shared/dto/pagination.dto';
+import { PaginationDto } from '../../shared/dto/pagination.dto';
 
 export class getAllQuery extends PaginationDto {
   @ApiPropertyOptional()

@@ -6,8 +6,8 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { BaseResponse } from 'src/shared/response/base-response';
-import { ResponseError } from 'src/shared/response/response.interface';
+import { BaseResponse } from '../../shared/response/base-response';
+import { ResponseError } from '../../shared/response/response.interface';
 import { HttpAdapterHost } from '@nestjs/core';
 
 @Catch()

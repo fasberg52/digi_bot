@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { FindOptionsWhere, In, IsNull, MoreThan, Not } from 'typeorm';
 import { Request } from 'express';
-import { SessionEntity } from './entity/sessios.entity';
-import { UserEntity } from 'src/users/entity/users.entity';
+import { SessionEntity } from './entity/session.entity';
+import { UserEntity } from '../users/entity/users.entity';
 import { SessionRepository } from './repository/session.respository';
-import { StringHelper } from 'src/helper/string-helper';
+import { StringHelper } from '../helper/string-helper';
 @Injectable()
 export class SessionService {
   constructor(private readonly sessionRepository: SessionRepository) {}
