@@ -70,7 +70,6 @@ export class UserService {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
 
-    // Update the user with new values
     Object.assign(user, updateUserDto);
     return await this.userRepository.save(user);
   }
@@ -81,7 +80,6 @@ export class UserService {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
 
-    // Set the `deletedAt` field to the current date
     user.deletedAt = new Date();
     await this.userRepository.save(user);
   }
@@ -94,7 +92,6 @@ export class UserService {
       );
     }
 
-    // Clear the `deletedAt` field to restore the user
     user.deletedAt = null;
     await this.userRepository.save(user);
   }

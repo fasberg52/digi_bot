@@ -1,6 +1,12 @@
 import { ApiProperty, ApiPropertyOptional, ApiQuery } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsDateString, IsInt, IsOptional, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsIn,
+  IsInt,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { PaginationDto } from '../../shared/dto/pagination.dto';
 
 export class getAllQuery extends PaginationDto {
@@ -24,5 +30,6 @@ export class getAllQuery extends PaginationDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
+  @IsIn(['ASC', 'DESC'])
   sortOrder: string = 'DESC';
 }

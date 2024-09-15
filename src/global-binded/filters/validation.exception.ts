@@ -4,6 +4,7 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { BaseResponse } from '../../shared/response/base-response';
@@ -12,6 +13,8 @@ import { HttpAdapterHost } from '@nestjs/core';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
+  private readonly logger = new Logger(AllExceptionsFilter.name);
+
   constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
 
   catch(exception: any, host: ArgumentsHost) {
@@ -42,6 +45,12 @@ export class AllExceptionsFilter implements ExceptionFilter {
         message: errorResponse.message,
       },
     };
+
+    this.logger.error({
+      message: errorResponse.message,
+      stack: exception.stack,
+      statusCode: status,
+    });
 
     httpAdapter.reply(response, baseResponse, status);
   }

@@ -12,6 +12,7 @@ import {
 import { TransactionService } from './transaction.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { getAllQuery } from '../shared/dto/query.dto';
+import { getAllQueryTransaction } from './dto/get-all-query.dto';
 
 @Controller('transaction')
 @ApiTags('Transaction')
@@ -44,7 +45,7 @@ export class TransactionController {
   @ApiOkResponse(TransactionListResponse.getApiDoc())
   @Get()
   async getAllTransactions(
-    @Query() query: getAllQuery,
+    @Query() query: getAllQueryTransaction,
   ): Promise<TransactionListResponse> {
     const [result, total] =
       await this.transactionService.getAllTransaction(query);

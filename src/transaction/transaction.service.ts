@@ -11,8 +11,16 @@ import { ZarinpalService } from '../payment/zarinpal/zarinpal.service';
 import { TransactionEntity } from './entity/transaction.entity';
 import { UserSubscribeService } from '../user-subscribe/user-subscribe.service';
 import { UserSubscribeRepository } from '../user-subscribe/repository/subscribe-user.repository';
-import { Equal, FindManyOptions, FindOptionsWhere, Like } from 'typeorm';
+import {
+  Equal,
+  FindManyOptions,
+  FindOptionsWhere,
+  ILike,
+  Like,
+  Raw,
+} from 'typeorm';
 import { getAllQuery } from '../shared/dto/query.dto';
+import { getAllQueryTransaction } from './dto/get-all-query.dto';
 
 @Injectable()
 export class TransactionService {
@@ -104,24 +112,33 @@ export class TransactionService {
   }
 
   async getAllTransaction(
-    query: getAllQuery,
+    query: getAllQueryTransaction,
   ): Promise<[TransactionEntity[], number]> {
-    const { page, limit, sortBy, sortOrder, search } = query;
-    const where: FindOptionsWhere<TransactionEntity>[] = search
-      ? [{ refId: Equal(Number(search)) }, { id: Like(`%${search}%`) }]
-      : [];
+    const { page, limit, sortBy, sortOrder, search, status } = query;
 
-    const options: FindManyOptions<TransactionEntity> = {
-      where,
-      skip: (page - 1) * limit,
-      take: limit,
-      order: {
-        [sortBy]: sortOrder,
-      },
-    };
+    const validSortOrder: 'ASC' | 'DESC' =
+      sortOrder === 'ASC' || sortOrder === 'DESC' ? sortOrder : 'ASC';
 
-    const [transactions, total] =
-      await this.transactionRepository.findAndCount(options);
+    const queryBuilder =
+      this.transactionRepository.createQueryBuilder('transactions');
+
+    if (search) {
+      const searchValue = `${search}%`;
+      queryBuilder.andWhere('CAST(transactions.refId AS TEXT) LIKE :search', {
+        search: searchValue,
+      });
+    }
+
+    if (status) {
+      queryBuilder.andWhere('transactions.status = :status', { status });
+    }
+
+    queryBuilder
+      .skip((page - 1) * limit)
+      .take(limit)
+      .orderBy(`transactions.${sortBy}`, validSortOrder);
+
+    const [transactions, total] = await queryBuilder.getManyAndCount();
     return [transactions, total];
   }
 }
