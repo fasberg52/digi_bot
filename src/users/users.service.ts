@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserEntity } from './entity/users.entity';
 import { UserRepository } from './repository/user.reopsitory';
 import { CreateUserDto, UpdateUserDto } from './dto';
+import { getAllQuery } from '/srcshared/dto/query.dto';
+import { FindOptionsOrder, FindOptionsWhere, Like } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -30,7 +32,35 @@ export class UserService {
     return user;
   }
 
-  // Update a user
+  async getAllUsers(query: getAllQuery): Promise<[UserEntity[], number]> {
+    const { id, search, sortBy, sortOrder, page = 1, limit = 10 } = query;
+
+    const where: FindOptionsWhere<UserEntity> = {};
+
+    if (id) {
+      where.id = id;
+    }
+
+    if (search) {
+      where.firstName = Like(`%${search}%`);
+    }
+
+    const order: FindOptionsOrder<UserEntity> = {};
+
+    if (sortBy) {
+      order[sortBy] = sortOrder;
+    }
+
+    const [users, total] = await this.userRepository.findAndCount({
+      where,
+      order,
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+
+    return [users, total];
+  }
+
   async updateUser(
     userId: number,
     updateUserDto: UpdateUserDto,
@@ -45,7 +75,6 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
-  // Soft delete a user
   async softDeleteUser(userId: number): Promise<void> {
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
@@ -57,7 +86,6 @@ export class UserService {
     await this.userRepository.save(user);
   }
 
-  // Restore a soft-deleted user
   async restoreUser(userId: number): Promise<void> {
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user || !user.deletedAt) {
