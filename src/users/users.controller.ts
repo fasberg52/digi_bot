@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Post, Query } from '@nestjs/common';
 import { UserService } from './users.service';
 import { getAllQuery } from '/srcshared/dto/query.dto';
 import { UserListResponse } from './response/users.response';

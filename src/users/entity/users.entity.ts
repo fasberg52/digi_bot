@@ -22,6 +22,7 @@ import {
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { ApiKeyEntity } from '../../token/entity/api-key.entity';
+import { DigikalaTokenEntity } from './digikala-token.users.entity';
 
 @Entity('users')
 export class UserEntity extends BaseEntity {
@@ -99,4 +100,9 @@ export class UserEntity extends BaseEntity {
   @IsDateString()
   @Exclude()
   deletedAt: Date;
+
+  @OneToMany(() => DigikalaTokenEntity, (digikalaTokens) => digikalaTokens.user)
+  @JoinColumn()
+  @ApiProperty({ type: () => [DigikalaTokenEntity] })
+  digikalaTokens: DigikalaTokenEntity[];
 }

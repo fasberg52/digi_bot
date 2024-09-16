@@ -8,12 +8,14 @@ import { ApiKeyService } from '../token/api-key.service';
 import { ApikeyRepository } from '../token/repository/api-key.repository';
 import { UserService } from '../users/users.service';
 import { UserRepository } from '../users/repository/user.reopsitory';
+import { DigikalaTokenRepository } from '/srcusers/repository/digikala-token.repository';
 
 const repo = [
   UserSubscribeRepository,
   SubscribeRepository,
   ApikeyRepository,
   UserRepository,
+  DigikalaTokenRepository,
 ];
 @Module({
   imports: [
@@ -22,6 +24,7 @@ const repo = [
       SubscribeRepository,
       ApikeyRepository,
       UserRepository,
+      DigikalaTokenRepository,
     ]),
   ],
   controllers: [UserSubscribeController],

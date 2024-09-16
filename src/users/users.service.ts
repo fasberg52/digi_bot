@@ -1,13 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserEntity } from './entity/users.entity';
 import { UserRepository } from './repository/user.reopsitory';
-import { CreateUserDto, UpdateUserDto } from './dto';
+import { CreateUserDto, DigikalaTokenDto, UpdateUserDto } from './dto';
 import { getAllQuery } from '/srcshared/dto/query.dto';
 import { FindOptionsOrder, FindOptionsWhere, Like } from 'typeorm';
+import { DigikalaTokenRepository } from './repository/digikala-token.repository';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly digikalaTokenRepository: DigikalaTokenRepository,
+  ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
     const newUser = this.userRepository.create(createUserDto);
@@ -94,5 +98,19 @@ export class UserService {
 
     user.deletedAt = null;
     await this.userRepository.save(user);
+  }
+
+  async addTokenDigikala(token: DigikalaTokenDto, userId: number) {
+    const user = await this.userRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new NotFoundException(`User with ID ${userId} not found`);
+    }
+
+    const newDigikalaToken = await this.digikalaTokenRepository.create({
+      digikalaToken: token.digikalaToken,
+      userId,
+    });
+
+    return await this.digikalaTokenRepository.save(newDigikalaToken);
   }
 }

@@ -13,6 +13,7 @@ import { ApiKeyService } from '../token/api-key.service';
 import { ApikeyRepository } from '../token/repository/api-key.repository';
 import { UserService } from '../users/users.service';
 import { UserRepository } from '../users/repository/user.reopsitory';
+import { DigikalaTokenRepository } from '/srcusers/repository/digikala-token.repository';
 
 const repo = [
   TransactionRepository,
@@ -20,6 +21,7 @@ const repo = [
   UserSubscribeRepository,
   ApikeyRepository,
   UserRepository,
+  DigikalaTokenRepository,
 ];
 @Module({
   controllers: [TransactionController],
@@ -38,6 +40,7 @@ const repo = [
       SubscribeRepository,
       UserSubscribeRepository,
       ApikeyRepository,
+      DigikalaTokenRepository,
     ]),
     HttpModule,
   ],

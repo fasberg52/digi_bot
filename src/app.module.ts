@@ -10,6 +10,7 @@ import { SubscribeModule } from './subscribe/subscribe.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { UserSubscribeModule } from './user-subscribe/user-subscribe.module';
 import { ApiKeyModule } from './token/api-key.module';
+import { DigikalaModule } from './puppetter/digikala.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { ApiKeyModule } from './token/api-key.module';
     TransactionModule,
     UserSubscribeModule,
     ApiKeyModule,
+    DigikalaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
